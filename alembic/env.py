@@ -3,10 +3,10 @@ from logging.config import fileConfig
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 from sqlalchemy.ext.asyncio import AsyncEngine
-import asyncio
+from asyncio import get_event_loop
+
 from app.core import config as app_config
 from alembic import context
-
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -36,15 +36,12 @@ def get_database_uri():
 
 def run_migrations_offline():
     """Run migrations in 'offline' mode.
-
     This configures the context with just a URL
     and not an Engine, though an Engine is acceptable
     here as well.  By skipping the Engine creation
     we don't even need a DBAPI to be available.
-
     Calls to context.execute() here emit the given string to the
     script output.
-
     """
     url = get_database_uri()
     context.configure(
@@ -53,7 +50,6 @@ def run_migrations_offline():
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
         compare_type=True,
-        compare_server_default=True,
     )
 
     with context.begin_transaction():
@@ -71,10 +67,8 @@ def do_run_migrations(connection):
 
 async def run_migrations_online():
     """Run migrations in 'online' mode.
-
     In this scenario we need to create an Engine
     and associate a connection with the context.
-
     """
     configuration = config.get_section(config.config_ini_section)
     assert configuration
@@ -94,4 +88,4 @@ async def run_migrations_online():
 if context.is_offline_mode():
     run_migrations_offline()
 else:
-    asyncio.run(run_migrations_online())
+    get_event_loop().run_until_complete(run_migrations_online())
