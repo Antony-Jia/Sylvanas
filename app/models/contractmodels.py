@@ -5,12 +5,12 @@ from sqlalchemy import Column, String, Integer
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import registry
 
-TokenBase = registry()
+ContractBase = registry()
 
-@TokenBase.mapped
+@ContractBase.mapped
 @dataclass
-class Token:
-    __tablename__ = "token"
+class Contract:
+    __tablename__ = "contract"
     __sa_dataclass_metadata_key__ = "sa"
     
     id: int = field(init=False, metadata={"sa": Column(Integer, primary_key=True)})

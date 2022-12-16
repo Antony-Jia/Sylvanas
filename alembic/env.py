@@ -21,9 +21,9 @@ fileConfig(config.config_file_name)  # type: ignore
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 from app.models.models import Base
-from app.models.tokenmodels import TokenBase
+from app.models.contractmodels import ContractBase
 
-target_metadata = [Base.metadata, TokenBase.metadata]
+target_metadata = [Base.metadata, ContractBase.metadata]
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
